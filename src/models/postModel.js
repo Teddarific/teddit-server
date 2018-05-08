@@ -7,6 +7,7 @@ const PostSchema = new Schema(
     tags: String,
     content: String,
     cover_url: String,
+    contentType: String,
     upvotes: { type: Number, default: 0 },
     downvotes: { type: Number, default: 0 },
     dateCreated: { type: Date, default: Date.now },

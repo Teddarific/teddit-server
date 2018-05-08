@@ -7,6 +7,7 @@ export const createPost = (req, res) => {
   post.content = req.body.content;
   post.tags = req.body.tags;
   post.cover_url = req.body.cover_url;
+  post.contentType = req.body.contentType;
   post.upvotes = 0;
   post.downvotes = 0;
   post.dateCreated = Date.now();
@@ -66,7 +67,7 @@ export const deletePost = (req, res) => {
 
 export const updatePost = (req, res) => {
   const fields = {};
-  const fieldNames = ['title', 'tags', 'content', 'cover_url', 'upvotes', 'downvotes'];
+  const fieldNames = ['title', 'tags', 'content', 'cover_url', 'contentType', 'upvotes', 'downvotes'];
   for (let i = 0; i < fieldNames.length; i += 1) {
     if (req.body[fieldNames[i]]) {
       fields[fieldNames[i]] = req.body[fieldNames[i]];
