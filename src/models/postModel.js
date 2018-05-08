@@ -26,7 +26,7 @@ PostSchema.virtual('score').get(function scoreCalc() {
 PostSchema.virtual('hotScore').get(function scoreCalc() {
   const dateCreated = new Date(Date.parse(this.dateCreated));
   const dateNow = new Date();
-  const normalizedDateDiff = (dateNow.getTime() - dateCreated.getTime()) / (10 ** 10);
+  const normalizedDateDiff = (dateNow.getTime() - dateCreated.getTime()) / (10 ** 8);
 
   const score = this.upvotes - this.downvotes;
   const hotScore = score * (1 / (normalizedDateDiff ** 2));
