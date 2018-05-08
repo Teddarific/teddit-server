@@ -29,7 +29,7 @@ PostSchema.virtual('hotScore').get(function scoreCalc() {
   const normalizedDateDiff = (dateNow.getTime() - dateCreated.getTime()) / (10 ** 8);
 
   const score = this.upvotes - this.downvotes;
-  const hotScore = score * (1 / (normalizedDateDiff ** 2));
+  const hotScore = (score ** 2) * (1 / (normalizedDateDiff ** 2));
   return hotScore;
 });
 
