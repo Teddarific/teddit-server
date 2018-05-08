@@ -24,7 +24,13 @@ PostSchema.virtual('score').get(function scoreCalc() {
 });
 
 PostSchema.virtual('hotScore').get(function scoreCalc() {
-  return (this.upvotes - this.downvotes);
+  const dateCreated = new Date(Date.parse(this.dateCreated));
+  const dateNow = new Date();
+  const normalizedDateDiff = (dateNow.getTime() - dateCreated.getTime()) / (10 ** 9);
+
+  const score = this.upvotes - this.downvotes;
+  const hotScore = score * (1 / (normalizedDateDiff ** 2));
+  return hotScore;
 });
 
 // create model class

@@ -34,6 +34,18 @@ export const getPosts = (req, res) => {
     {
       $sort: { scorePipe: -1 },
     }];
+  } else if (req.query.sortMethod === 'hot') {
+    Post.find({})
+      .then((result) => {
+        result.sort((x, y) => {
+          return y.hotScore - x.hotScore;
+        });
+        res.json(result);
+      })
+      .catch((error) => {
+        res.status(500).json({ error });
+      });
+    return;
   }
   Post.aggregate(pipeline)
     .then((result) => {
