@@ -1,7 +1,6 @@
 import Post from '../models/postModel';
 
 export const createPost = (req, res) => {
-  console.log('hit');
   const post = new Post();
 
   post.title = req.body.title;
@@ -40,7 +39,6 @@ export const getPosts = (req, res) => {
     Post.find({})
       .populate('creator')
       .then((result) => {
-        console.log(result);
         result.sort((x, y) => {
           return y.hotScore - x.hotScore;
         });
@@ -67,7 +65,6 @@ export const getPost = (req, res) => {
   Post.findOne({ _id: req.params.id })
     .populate('creator')
     .then((result) => {
-      console.log(result);
       res.json(result);
     })
     .catch((error) => {
@@ -102,7 +99,6 @@ export const updatePost = (req, res) => {
 };
 
 export const votePost = (req, res) => {
-  console.log(req.body);
   Post.findOne({ _id: req.params.id }).then((post) => {
     if (req.body.vote === 'upvote') {
       post.upvotes += 1;

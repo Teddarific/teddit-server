@@ -11,7 +11,6 @@ export const signIn = (req, res, next) => {
 
 export const signUp = (req, res, next) => {
   const { username, email, password } = req.body;
-  console.log(req.body);
   if (!username || !email || !password) {
     return res.status(422).json({ error: 'You must provide email and password' });
   }
@@ -19,7 +18,6 @@ export const signUp = (req, res, next) => {
   User.findOne({ username, email })
     .then((result) => {
       if (result) {
-        console.log(result);
         if (result.username === username) {
           res.status(422).json({ error: 'An account with this username already exists' });
         } else if (result.email === email) {
@@ -42,8 +40,6 @@ export const signUp = (req, res, next) => {
 
 export const validateNewField = (req, res, next) => {
   const { field, value } = req.query;
-  console.log(req.query);
-  console.log(req.body);
   const query = {};
   query[field] = value;
   User.findOne(query)
