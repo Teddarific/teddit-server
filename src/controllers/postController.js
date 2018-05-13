@@ -1,6 +1,7 @@
 import Post from '../models/postModel';
 
 export const createPost = (req, res) => {
+  console.log('hit');
   const post = new Post();
 
   post.title = req.body.title;
@@ -11,10 +12,11 @@ export const createPost = (req, res) => {
   post.upvotes = 0;
   post.downvotes = 0;
   post.dateCreated = Date.now();
+  post.creator = req.user;
 
   post.save()
     .then((result) => {
-      res.json({ message: 'Post created' });
+      res.json({ message: 'Post successfully created' });
     })
     .catch((error) => {
       res.status(500).json({ error });
@@ -36,7 +38,9 @@ export const getPosts = (req, res) => {
     }];
   } else if (req.query.sortMethod === 'hot') {
     Post.find({})
+      .populate('creator')
       .then((result) => {
+        console.log(result);
         result.sort((x, y) => {
           return y.hotScore - x.hotScore;
         });
@@ -49,8 +53,10 @@ export const getPosts = (req, res) => {
   }
   Post.aggregate(pipeline)
     .then((result) => {
-      console.log(result);
-      res.json(result);
+      Post.populate(result, { path: 'creator' })
+        .then((retResult) => {
+          res.json(result);
+        });
     })
     .catch((error) => {
       res.status(500).json({ error });
@@ -59,7 +65,9 @@ export const getPosts = (req, res) => {
 
 export const getPost = (req, res) => {
   Post.findOne({ _id: req.params.id })
+    .populate('creator')
     .then((result) => {
+      console.log(result);
       res.json(result);
     })
     .catch((error) => {
@@ -94,6 +102,7 @@ export const updatePost = (req, res) => {
 };
 
 export const votePost = (req, res) => {
+  console.log(req.body);
   Post.findOne({ _id: req.params.id }).then((post) => {
     if (req.body.vote === 'upvote') {
       post.upvotes += 1;

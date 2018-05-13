@@ -11,9 +11,13 @@ const PostSchema = new Schema(
     upvotes: { type: Number, default: 0 },
     downvotes: { type: Number, default: 0 },
     dateCreated: { type: Date, default: Date.now },
+    creator: { type: Schema.Types.ObjectId, ref: 'User' },
   },
   {
     toJSON: {
+      virtuals: true,
+    },
+    toObject: {
       virtuals: true,
     },
   },
