@@ -90,12 +90,14 @@ export const updatePost = (req, res) => {
       fields[fieldNames[i]] = req.body[fieldNames[i]];
     }
   }
-  Post.findByIdAndUpdate(req.params.id, fields, { new: true }, (error, post) => {
-    if (error) {
+  Post.findByIdAndUpdate(req.params.id, fields, { new: true })
+    .populate('creator')
+    .then((post) => {
+      res.json(post);
+    })
+    .catch((error) => {
       res.status(500).json({ error });
-    }
-    res.json(post);
-  });
+    });
 };
 
 export const votePost = (req, res) => {
