@@ -16,7 +16,7 @@ router.route('/posts')
 router.route('/posts/:id')
   .get(Posts.getPost)
   .put(Posts.updatePost)
-  .delete(requireAuth, Posts.deletePost);
+  .delete(Posts.deletePost);
 
 router.route('/posts/vote/:id')
   .put(Posts.votePost);
