@@ -18,5 +18,5 @@ yarn
 
 Start the API:
 ```
-npm start
+npm dev
 ```
