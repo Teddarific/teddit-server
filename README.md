@@ -2,7 +2,7 @@
 
 A platform similar to Reddit, but Teddit.
 
-The server side of [Teddit](teddit.surge.sh)
+The server side of teddit.surge.sh
 
 ## Local Usage
 
